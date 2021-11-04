@@ -1,0 +1,74 @@
+
+.tab-pane{
+    -fx-background-color:  transparent;
+}
+
+.tab{
+    -fx-font-size: 1.5em;
+    -fx-background-color: transparent;
+    -fx-pref-height: 40px;
+    -fx-start-margin: 20px;
+}
+
+.tab:selected {
+    -fx-background-color: #22292a;
+    -fx-border-width: none;
+}
+
+.tab:selected .focus-indicator{
+    -fx-focus-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.tab-pane .tab-header-background{
+    -fx-background-color: transparent;
+}
+
+.text-color-blue{
+    -fx-text-fill: #87ceeb;
+}
+
+.text-color-pink{
+    -fx-text-fill: #ff7bac;
+}
+
+.text-color-orange{
+    -fx-text-fill: #fbb03b;
+}
+
+.bg-complete{
+    -fx-background-color: #87ceeb;
+}
+
+.btn{
+    -fx-text-fill: #1F2D3E;
+    -fx-background-color: #bdcbde;
+}
+
+.btn:hover, .op-btn:hover, .num-btn:hover {
+    -fx-background-color: #abc1d4;
+}
+
+.num-btn{
+    -fx-text-fill:  #1F2D3E;
+    -fx-background-color: white;
+}
+
+.active-btn{
+    -fx-text-fill: white;
+    -fx-background-color: #4f6ca8;
+}
+
+.op-btn{
+    -fx-text-fill: #1F2D3E;
+    -fx-background-color: #bdcbde;
+}
+
+
+.bg-error{
+    -fx-background-color: #ff1522;
+}
+
+.bg-warning{
+    -fx-background-color: #fbd13b;
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="titleBar" maxHeight="30.0" prefHeight="30.0" prefWidth="650.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cal.ctrl.TitleBarController">
+         <children>
+      <Line endX="550.0" startX="-100.0" stroke="#ffffff33" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <HBox layoutX="481.0" prefHeight="30.0" prefWidth="80.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+             <ImageView fx:id="minimizeBtn" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets bottom="9.0" left="14.0" right="14.0" top="9.0" />
+               </HBox.margin>
+             </ImageView>
+             <ImageView fx:id="closeBtn" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets bottom="9.0" left="14.0" right="14.0" top="9.0" />
+               </HBox.margin>
+            </ImageView>
+
+         </children>
+      </HBox>
+      <Label layoutX="20.0" layoutY="6.0" text="Calculator" textFill="#1f2d3e" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="3.0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+         </children>
+</AnchorPane>
