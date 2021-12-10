@@ -14,19 +14,24 @@
 <AnchorPane prefHeight="672.0" prefWidth="803.0" style="-fx-background-color: #F5F3F3;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cal.ctrl.MainController">
    <children>
       <AnchorPane fx:id="title" layoutX="2.0" layoutY="-15.0" prefHeight="30.0" prefWidth="600.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
-      <AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="149.0" prefWidth="714.0" AnchorPane.bottomAnchor="493.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="30.0">
-         <children>
-            <Label fx:id="result" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="26.0" prefHeight="117.0" prefWidth="512.0" text="0" textFill="#1f2d3e" wrapText="true" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="26.0">
-               <font>
-                  <Font size="64.0" />
-               </font>
-            </Label>
-            <Label fx:id="expression" alignment="CENTER_RIGHT" layoutX="126.0" layoutY="58.0" prefHeight="133.0" prefWidth="8.0" textAlignment="RIGHT" textFill="#1e2c3bcc" wrapText="true" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="2.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
+      <AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="149.0" prefWidth="714.0"
+                  AnchorPane.bottomAnchor="493.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0"
+                  AnchorPane.topAnchor="30.0">
+         <Label fx:id="result" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="26.0" prefHeight="117.0"
+                prefWidth="512.0" text="0" textFill="#1f2d3e" wrapText="true" AnchorPane.bottomAnchor="6.0"
+                AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="26.0">
+            <font>
+               <Font size="64.0"/>
+            </font>
+         </Label>
+         <Label fx:id="expression" alignment="CENTER_RIGHT" layoutX="126.0" layoutY="58.0" prefHeight="133.0"
+                prefWidth="8.0" textAlignment="RIGHT" textFill="#1e2c3bcc" wrapText="true"
+                AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0"
+                AnchorPane.topAnchor="2.0">
+            <font>
+               <Font size="14.0"/>
+            </font>
+         </Label>
       </AnchorPane>
       <StackPane maxHeight="-Infinity" prefHeight="493.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -227,7 +232,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                            <children>
-                              <JFXButton fx:id="cSignBtn" layoutX="67.0" layoutY="30.0" ripplerFill="#7895ba" styleClass="btn" text="+/-" textFill="#1f2d3e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <JFXButton fx:id="cSignBtn" disable="true" layoutX="67.0" layoutY="30.0" ripplerFill="#7895ba" styleClass="btn" text="+/-" textFill="#1f2d3e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

@@ -1,7 +1,6 @@
 package cal.ctrl;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.css.Match;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -57,12 +55,11 @@ public class MainController implements Initializable {
 
     boolean isLastOp, isCalculated, isDivideByZero, specialExp, invalidResult;
     int openParentheses;
-    private Stack<String> operatorStack;
-    private Stack<Double> operandStack;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         convertMode = "DEC";
+        angleUnit = "deg";
         reset();
         setTitleBar();
         setIcon();
@@ -103,42 +100,22 @@ public class MainController implements Initializable {
 
     private void setHandler(){
 
-        num0.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num0);
-        });
-        num1.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num1);
-        });
-        num2.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num2);
-        });
-        num3.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num3);
-        });
-        num4.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num4);
-        });
-        num5.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num5);
-        });
-        num6.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num6);
-        });
-        num7.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num7);
-        });
-        num8.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num8);
-        });
-        num9.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            numberBtnHandler(num9);
-        });
+        num0.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num0));
+        num1.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num1));
+        num2.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num2));
+        num3.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num3));
+        num4.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num4));
+        num5.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num5));
+        num6.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num6));
+        num7.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num7));
+        num8.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num8));
+        num9.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> numberBtnHandler(num9));
 
 
         numberSign.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
             String text = result.getText();
             if(Pattern.compile(".*\\d.*").matcher(text).matches()){
-                if(text.equals("0") == false){
+                if(!text.equals("0")){
                     if(text.contains("-")){
                         text = text.substring(1);
                     }else {
@@ -149,76 +126,38 @@ public class MainController implements Initializable {
             }
         });
 
-        addBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            opBtnHandler("+");
-        });
-        mulBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            opBtnHandler("*");
-        });
-        divBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            opBtnHandler("/");
-        });
-        subBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            opBtnHandler("-");
-        });
-        xnBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            opBtnHandler("^");
-        });
+        addBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("+"));
+        mulBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("*"));
+        divBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("/"));
+        subBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("-"));
+        xnBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> opBtnHandler("^"));
 
 
-        eqBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            eqBtnHandler();
-        });
+        eqBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> eqBtnHandler());
 
-        piBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            piBtnHandler();
-        });
+        piBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> piBtnHandler());
 
-        factBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            factBtnHandler();
-        });
+        factBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> factBtnHandler());
 
-        eulerNumberBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            eulerNumberBtnHandler();
-        });
+        eulerNumberBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> eulerNumberBtnHandler());
 
-        x2Btn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            square();
-        });
+        x2Btn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> square());
 
-        srBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            opBtnHandler("sqrt");
-        });
+        srBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("sqrt"));
 
         delBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> backSpaceBtnHandler());
 
-        dotBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            dotBtnHandler();
-        });
+        dotBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> dotBtnHandler());
 
-        lnBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            opBtnHandler("ln");
-        });
+        lnBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> opBtnHandler("ln"));
 
-        sinBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            //sinBtnHandler();
-            opBtnHandler("sin");
-        });
+        sinBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("sin"));
 
-        cosBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            //cosBtnHandler();
-            opBtnHandler("cos");
-        });
+        cosBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("cos"));
 
-        tanBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            //tanBtnHandler();
-            opBtnHandler("tan");
-        });
+        tanBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("tan"));
 
-        cotBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-           // cotBtnHandler();
-            opBtnHandler("cot");
-        });
+        cotBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> opBtnHandler("cot"));
 
         angleUnitBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
             if(angleUnit.equals("deg")){
@@ -232,9 +171,7 @@ public class MainController implements Initializable {
 
         result.textProperty().addListener((observable, oldValue, newValue) ->{
                 Matcher matcher = Pattern.compile(".*\\..*").matcher(newValue);
-                if (matcher.matches()){
-                    factBtn.setDisable(true);
-                }else factBtn.setDisable(false);
+                factBtn.setDisable(matcher.matches());
 
                 if(newValue.length()>23){
                     result.setStyle("-fx-font-size: 28;");
@@ -245,12 +182,9 @@ public class MainController implements Initializable {
                     result.setStyle("-fx-font-size: 64;");
                 }
 
-                if(newValue.equals("0")){
-                    logxyBtn.setDisable(true);
-                }else logxyBtn.setDisable(false);
+            logxyBtn.setDisable(newValue.equals("0"));
 
-                if(openParentheses > 0) closePBtn.setDisable(false);
-                else closePBtn.setDisable(true);
+            closePBtn.setDisable(openParentheses <= 0);
 
                 /* if(exp.equals("") || isLastOp){
                     openPBtn.setDisable(false);
@@ -261,21 +195,13 @@ public class MainController implements Initializable {
         });
 
 
-        clearBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            clearBtnHandler();
-        });
+        clearBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> clearBtnHandler());
 
-        logxyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            logxyBtnHandler();
-        });
+        logxyBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> logxyBtnHandler());
 
-        openPBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            openPHandler();
-        });
+        openPBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> openPHandler());
 
-        closePBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            closePHandler();
-        });
+        closePBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> closePHandler());
 
         toConvertTabBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
             reset();
@@ -384,14 +310,13 @@ public class MainController implements Initializable {
         exp = "";
         curNumber = 0;
         lastResult = 0;
-        operandStack = new Stack<>();
-        operatorStack = new Stack<>();
+        Stack<Double> operandStack = new Stack<>();
+        Stack<String> operatorStack = new Stack<>();
         isLastOp = false;
         isCalculated = false;
         isDivideByZero = false;
         specialExp = false;
         openParentheses = 0;
-        angleUnit = "deg";
         expression.setText("");
         result.setText("0");
         invalidResult = false;
@@ -409,23 +334,25 @@ public class MainController implements Initializable {
             if(specialExp){
                 expression.setText(expression.getText());
             }else {
-                if(exp.endsWith(")") == false){
+                if(!exp.endsWith(")")){
                     exp = exp + " " + result.getText();
                     expression.setText(expression.getText() + " "+ result.getText());
                 }
             }
         }
 
-        System.out.println(exp);
+        //System.out.println(exp);
         isCalculated = true;
-        lastResult = aa(exp);
+        lastResult = shuntingYard(exp);
 
         if(isDivideByZero){
             isDivideByZero = false;
             result.setText("Cannot divide by zero");
+            expression.setText("");
         }else if(invalidResult){
             invalidResult = false;
             result.setText("Invalid Input");
+            expression.setText("");
         }else {
             invalidResult = false;
             isDivideByZero = false;
@@ -465,50 +392,63 @@ public class MainController implements Initializable {
     }
     //xử lý sự kiện nhấn phím toán hạng trên màn hình
     private void opBtnHandler(String op){
+        if(! Pattern.compile(".*\\d.*").matcher(result.getText()).matches()) result.setText("0");
         //truoc do vua nhan operator nao do
-        System.out.println(op +" ------------ "+ isLastOp+" -------------- "+lastOp);
-        if(isCalculated == true){
+        //System.out.println(op +" ------------ "+ isLastOp+" -------------- "+lastOp);
+        if(isCalculated){
             expression.setText("");
             exp = "";
             isLastOp = false;
         }
         if(isLastOp){
-            if(lastOp.equals(op) == false){
+            if(!lastOp.equals(op)){
                 switch (lastOp){
+                    case ")":
+                        switch (op) {
+                            case "sin", "cos", "tan", "cot", "sqrt", "ln" -> {
+                                exp = op + " (";
+                                expression.setText(op + " (");
+                            }
+                            default -> {
+                                exp += " " + op;
+                                expression.setText(expression.getText() + " " + op);
+                            }
+                        }
+                    break;
                     case "sin": case "cos": case "tan": case "cot": case "sqrt": case "ln":
-                        switch (op){
-                            case "sin": case "cos": case "tan": case "cot": case "sqrt": case "ln":
-                              exp = exp.substring(0, exp.length() - 2 - lastOp.length()) + op + " (";
-                              String ex = expression.getText();
-                              expression.setText(ex.substring(0, ex.length() - 2 - lastOp.length()) + op + " (");
-                              break;
-                            default:
+                        switch (op) {
+                            case "sin", "cos", "tan", "cot", "sqrt", "ln" -> {
+                                exp = exp.substring(0, exp.length() - 2 - lastOp.length()) + op + " (";
+                                String ex = expression.getText();
+                                expression.setText(ex.substring(0, ex.length() - 2 - lastOp.length()) + op + " (");
+                            }
+                            default -> {
                                 int length = lastOp.length() + 4;
-                                if(exp.length() > length){
-                                    exp = exp.substring(0, exp.length() - length -2) + op;
-                                    expression.setText(expression.getText().substring(0, expression.getText().length() - length) + op);
-                                }else {
+                                if (exp.length() > length) {
+                                    exp = exp.substring(0, exp.length() - length - 2) + op;
+                                } else {
                                     exp = exp.substring(0, exp.length() - length) + op;
-                                    expression.setText(expression.getText().substring(0, expression.getText().length() - length) + op);
                                 }
-                                openParentheses --;
-                                if(openParentheses == 0) closePBtn.setDisable(true);
-                                break;
+                                expression.setText(expression.getText().substring(0, expression.getText().length() - length) + op);
+                                openParentheses--;
+                                if (openParentheses == 0) closePBtn.setDisable(true);
+                            }
                         }
                         break;
                     default:
-                        switch (op){
-                            case "sin": case "cos": case "tan": case "cot": case "sqrt": case "ln":
-                                exp +=" 1 "+ op + " (";
+                        switch (op) {
+                            case "sin", "cos", "tan", "cot", "sqrt", "ln" -> {
+                                exp += " 1 " + op + " (";
                                 String expr = expression.getText();
-                                expression.setText(expr+" " +op +" (");
-                                openParentheses ++;
+                                expression.setText(expr + " " + op + " (");
+                                openParentheses++;
                                 closePBtn.setDisable(false);
-                                break;
-                            default:
-                                exp = exp.substring(0, exp.length() - 1) +op;
+                            }
+                            default -> {
+                                exp = exp.substring(0, exp.length() - 1) + op;
                                 String ex = expression.getText();
-                                expression.setText(ex.substring(0,ex.length() - 1)+ op);
+                                expression.setText(ex.substring(0, ex.length() - 1) + op);
+                            }
                         }
                 }
             }
@@ -516,27 +456,28 @@ public class MainController implements Initializable {
             lastOp = op;
             isLastOp = true;
         }else {
-            switch (op){
-                case "sin": case "cos": case "tan": case "cot": case "sqrt": case "ln":
+            switch (op) {
+                case "sin", "cos", "tan", "cot", "sqrt", "ln" -> {
                     exp = "1 " + op + " (";
-                    expression.setText(op+" (");
+                    expression.setText(op + " (");
                     lastOp = op;
-                    openParentheses ++;
+                    openParentheses++;
                     closePBtn.setDisable(false);
                     isLastOp = false;
-                    break;
-                default:
-                    exp +=" " + result.getText() + " "+ op;
-                    expression.setText(expression.getText() + " " + result.getText() + " "+ op);
+                }
+                default -> {
+                    exp += " " + result.getText() + " " + op;
+                    expression.setText(expression.getText() + " " + result.getText() + " " + op);
                     lastOp = op;
                     isLastOp = true;
-                    break;
+                }
             }
         }
 
     }
     //xử lý sự kiện nhấn phím toán hạng trên bàn phím
     private void opBtnHandler(KeyEvent e){
+        if(! Pattern.compile(".*\\d.*").matcher(result.getText()).matches()) result.setText("0");
             if(!isLastOp){
                 if(isCalculated) expression.setText("");
 
@@ -637,6 +578,8 @@ public class MainController implements Initializable {
             exp += " "+Double.parseDouble(result.getText()) +" )";
             expression.setText(ex +" "+result.getText()+ " )");
         }
+        isLastOp = true;
+        lastOp = ")";
         openParentheses--;
         if(openParentheses == 0){
             closePBtn.setDisable(true);
@@ -748,122 +691,115 @@ public class MainController implements Initializable {
     }
 
 
-    public double aa(String a){
+    public double shuntingYard(String exp){
 
         /*
         * Chuỗi a có dạng "a + b - c";
         * Chuyển thành mãng các chuỗi b
         * Tạo 2 stack chứa toán tử và toán hạng
         *  */
-        a = a.trim();
-        System.out.println("chuoi a dua vao la: "+a);
-        String[] b = a.split("\\s");
-        System.out.println(a.length() - b.length);
+        exp = exp.trim();
+       // System.out.println("chuoi a dua vao la: "+exp);
+        String[] expArr = exp.split("\\s");
+       // System.out.println(exp.length() - expArr.length);
         Stack<Double> operandStack = new Stack<>();
         Stack<String> operatorStack = new Stack<>();
 
-        //Nếu trong mảng b chỉ chó một phần tử và nó là số thì return số đó
-        if(b.length == 1 && Pattern.compile(".*\\d.*").matcher(b[0]).matches()) return Double.parseDouble(b[0]);
+        //Nếu trong mảng b chỉ có một phần tử và nó là số thì return số đó
+        if(expArr.length == 1 && Pattern.compile(".*\\d.*").matcher(expArr[0]).matches()) return Double.parseDouble(expArr[0]);
 
         //Duyệt qua mảng b
-       for(String c: b){
+       for(String element: expArr){
 
-           System.out.println("\n c la: "+c+"\n");
+           //System.out.println("\n c la: "+element+"\n");
            //pattern kiểm tra có phải số
-           Matcher matcher = Pattern.compile(".*\\d.*").matcher(c);
+           Matcher matcher = Pattern.compile(".*\\d.*").matcher(element);
            //Nếu c là số
            if(matcher.matches()){
-               double operand = Double.parseDouble(c);
+               double operand = Double.parseDouble(element);
                //push c vào trong ngăn xếp
                operandStack.push(operand);
            }
            //Nếu c là toán tử
+           else
+           //Nếu ngăn xếp trống thì push c vào
+           if(operatorStack.isEmpty()){
+                   operatorStack.push(element);
+           }
+           //Ngược lại ngăn xếp có toán tử
            else {
-
-
-               //Nếu ngăn xếp trống thì push c vào
-               if(operatorStack.isEmpty() == true){
-                   operatorStack.push(c);
-               }
-               //Ngược lại ngăn xếp có toán tử
-               else {
-                   //Lấy toán tử đang ở trong ngăn xếp
-                   String op = operatorStack.peek();
-                   //Xét toán tử c
-                   switch (c){
-                       // Nếu là dấu "(" thì push vào stack
-                       case "(":
-                           operatorStack.push(c);
-                           break;
+               //Lấy toán tử đang ở trong ngăn xếp
+               String op = operatorStack.peek();
+               //Xét toán tử c
+               switch (element){
+                   // Nếu là dấu "(" thì push vào stack
+                   case "(":
+                       operatorStack.push(element);
+                       break;
                        //Nếu là dấu ")" thì thực hiện các phép toán bên trong
-                       case ")":
-                           //Nếu toán tử trong stack là "(" thì pop nó ra
-                           if(op.equals("(") == true){
-                               operatorStack.pop();
-                           }else {
-                               //Ngược lại thì tính toán các phép toán bên trong
+                   case ")":
+                       //Nếu toán tử trong stack là "(" thì pop nó ra
+                       if(op.equals("(")){
+                           operatorStack.pop();
+                       }else {
+                           //Ngược lại thì tính toán các phép toán bên trong
                                /*
                                * Lặp cho đến khi phép toán trong stack là "("
-                               * hoặc stack rỗng*/
-                               while (op.equals("(") == false && operatorStack.isEmpty() == false){
-                                   double operand1 = operandStack.pop();
-                                   double operand2 = operandStack.pop();
-                                   //thực hiện tính toán
-                                   double result = calculate(operand1, operand2, op);
-                                   //puch kết quả vào stack chứa số
-                                   operandStack.push(result);
-                                   operatorStack.pop();
-                                   //lấy phép toán trong stack toán tử
-                                   op = operatorStack.peek();
-                               }
-
-                               //Nếu stack toán tử không trống thì pop nó ra
-                               if(operatorStack.isEmpty() == false) operatorStack.pop();
+                               * hock stack rỗng*/
+                           while (op.equals("(") == false && operatorStack.isEmpty() == false){
+                               double operand1 = operandStack.pop();
+                               double operand2 = operandStack.pop();
+                               //thực hiện tính toán
+                               double result = calculate(operand1, operand2, op);
+                               //puch kết quả vào stack chứa số
+                               operandStack.push(result);
+                               operatorStack.pop();
+                               //lấy phép toán trong stack toán tử
+                               op = operatorStack.peek();
                            }
-                           break;
 
-                       default:
-                           //nếu phép toán hiện tại trong stack là "(" thì push thẳng phép toán đang xét vào stack
-                           if(op.equals("(") == true){
-                               operatorStack.push(c);
-                           }
-                           else {
-                               //Ngược lại check độ ưu tiên của phép toán đang xét với phép toán hiện đang trong stack
-                               while (priorityCheck(op, c) ==  true){
+                           //Nếu stack toán tử không trống thì pop nó ra
+                           if(operatorStack.isEmpty() == false) operatorStack.pop();
+                       }
+                       break;
+                   default:
+                       //nếu phép toán hiện tại trong stack là "(" thì push thẳng phép toán đang xét vào stack
+                       if (!op.equals("(")) {
+                           //Ngược lại check độ ưu tiên của phép toán đang xét với phép toán hiện đang trong stack
+                           while (priorityCheck(op, element)) {
 
-                                   //Như trên vòng while
-                                   System.out.println("------------------------------------------------------");
-                                   System.out.println(operandStack.toString());
-                                   System.out.println(operatorStack.toString());
-                                   double operand1 = operandStack.pop();
-                                   double operand2 = operandStack.pop();
-                                   double result = calculate(operand1, operand2, op);
-                                   operandStack.push(result);
-                                   operatorStack.pop();
-                                   if(operatorStack.isEmpty() == false){
-                                       if(operatorStack.peek().equals("(")) break;
-                                       op = operatorStack.peek();
-                                   }else break;
-                               }
-                               operatorStack.push(c);
-                               System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                               //Như trên vòng while
+                               /*System.out.println("------------------------------------------------------");
                                System.out.println(operandStack.toString());
-                               System.out.println(operatorStack.toString());
+                               System.out.println(operatorStack.toString());*/
+                               double operand1 = operandStack.pop();
+                               double operand2 = operandStack.pop();
+                               double result = calculate(operand1, operand2, op);
+                               operandStack.push(result);
+                               operatorStack.pop();
+                               if (!operatorStack.isEmpty()) {
+                                   if (operatorStack.peek().equals("(")) break;
+                                   op = operatorStack.peek();
+                               } else break;
                            }
-                           break;
+                           /* System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                           System.out.println(operandStack.toString());
+                           System.out.println(operatorStack.toString());*/
+                       }
+                       operatorStack.push(element);
+                       break;
                    }
                }
-           }
         }
 
        /*
        *
        * */
-        System.out.println("/////////////////////////////");
+       /* System.out.println("/////////////////////////////");
         System.out.println(operandStack.toString());
-        System.out.println(operatorStack.toString());
+        System.out.println(operatorStack.toString());*/
        //Thực hiện vòng lặp cho đến khi stack toán tử có trống
-        while (operatorStack.isEmpty() == false){
+        while (!operatorStack.isEmpty()){
 
             String op = operatorStack.pop();
             double operand1 = operandStack.pop();
@@ -873,9 +809,8 @@ public class MainController implements Initializable {
         }
 
         //kết quả cuối cùng nằm trong stack số;
-        double result = operandStack.pop();
-        System.out.println("result: "+result);
-        return result;
+        // System.out.println("result: "+result);
+        return operandStack.pop();
     }
 
     //kiểm tra độ ưu tiên
@@ -948,7 +883,7 @@ public class MainController implements Initializable {
     }
 
     private double pow(double x, double n){
-        double result = 0.0;
+        double result;
         if(n - Math.floor(n) > 0){
             result = Math.pow(x, n);
         }else {
@@ -967,7 +902,7 @@ public class MainController implements Initializable {
             return num+"";
         }else {
             String fnum = String.format("%,f", num);
-            System.out.println(fnum);
+           // System.out.println(fnum);
             if (num % 1 != 0){
                 while (true){
                     if(fnum.endsWith("0") || fnum.endsWith(".")){
@@ -976,7 +911,7 @@ public class MainController implements Initializable {
                     } break;
                 }
             }else {
-                System.out.println("Integer");
+               // System.out.println("Integer");
                 fnum = fnum.substring(0, fnum.indexOf("."));
             }
             return fnum;
@@ -985,95 +920,101 @@ public class MainController implements Initializable {
 
 
     public String decToBin(long a){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         while (true){
             if(a == 1 || a == 0){
-                result = a + result;
+                result.insert(0, a);
                 break;
             }else {
-                result = a%2 + result;
+                result.insert(0, a % 2);
                 a = a/2;
             }
         }
-        return result;
+        return result.toString();
     }
 
     public String decToHex(long a) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         while (true){
             if(a <= 15){
-               result = translateDecToHex(a+"") + result;
+               result.insert(0, translateDecToHex(a + ""));
                break;
             }
             else {
-                result = translateDecToHex(a%16+"") + result;
+                result.insert(0, translateDecToHex(a % 16 + ""));
                 a = a/16;
             }
         }
-        return result;
+        return result.toString();
     }
 
     private String translateDecToHex(String a){
-        switch (a){
-            case "10": return "A";
-            case "11": return "B";
-            case "12": return "C";
-            case "13": return "D";
-            case "14": return "E";
-            case "15": return "F";
-            default: return a;
-        }
+        return switch (a) {
+            case "10" -> "A";
+            case "11" -> "B";
+            case "12" -> "C";
+            case "13" -> "D";
+            case "14" -> "E";
+            case "15" -> "F";
+            default -> a;
+        };
     }
 
     public String decToOct(long a) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         while (true){
             if(a <=7){
-                result = a + result;
+                result.insert(0, a);
                 break;
             }else {
-                result = a%8 + result;
+                result.insert(0, a % 8);
                 a = a/8;
             }
         }
-        return result;
+        return result.toString();
     }
 
     public String binToDec(String a){
+        if(a.equals("0")) return "0";
         char[] arr = a.toCharArray();
         long result = 0;
-        for(int i = 0; i < arr.length ; i++){
-            result += Integer.parseInt(""+ arr[i])* (long) pow(2, arr.length - (i+1));
+        int length = arr.length;
+        for(int i = 0; i < length ; i++){
+            result += Integer.parseInt(""+ arr[i])* (long) pow(2, length - (i+1));
         }
         return "" +result;
     }
 
     public String hexToDec(String a){
+        if(a.equals("0")) return "0";
         char[] arr = a.toCharArray();
         long result = 0;
-        for(int i = 0; i < arr.length; i++){
-            result += Integer.parseInt(translateHexToDec(arr[i]+""))* (long) pow(16, i);
+        int length = arr.length;
+        for(int i = 0; i < length; i++){
+            result += Integer.parseInt(translateHexToDec(arr[i]+""))* (long) pow(16, length - 1 - i );
         }
         return "" +result;
     }
 
     private String translateHexToDec(String a){
-        switch (a){
-            case "A": return "10";
-            case "B": return "11";
-            case "C": return "12";
-            case "D": return "13";
-            case "E": return "14";
-            case "F": return "15";
-            default: return a;
-        }
+        return switch (a) {
+            case "A" -> "10";
+            case "B" -> "11";
+            case "C" -> "12";
+            case "D" -> "13";
+            case "E" -> "14";
+            case "F" -> "15";
+            default -> a;
+        };
     }
 
     public String octToDec(String a){
+        if(a.equals("0")) return "0";
         char[] arr = a.toCharArray();
         long result = 0;
-        for(int i = 0; i < arr.length; i++){
-            result += Integer.parseInt(""+ arr[i])* (long) pow(8, i);
+        int length = arr.length;
+        for(int i = 0; i < length; i++){
+            result += Integer.parseInt(translateHexToDec(arr[i]+""))* (long) pow(8, length - 1 - i );
         }
         return "" +result;
     }
@@ -1098,8 +1039,8 @@ public class MainController implements Initializable {
         eBtn.setDisable(true);
         fBtn.setDisable(true);
 
-        switch (mode){
-            case "HEX":
+        switch (mode) {
+            case "HEX" -> {
                 fBtn.setDisable(false);
                 eBtn.setDisable(false);
                 dBtn.setDisable(false);
@@ -1116,8 +1057,8 @@ public class MainController implements Initializable {
                 cNum2Btn.setDisable(false);
                 cNum1Btn.setDisable(false);
                 cNum0Btn.setDisable(false);
-                break;
-            case "DEC":
+            }
+            case "DEC" -> {
                 cNum9Btn.setDisable(false);
                 cNum8Btn.setDisable(false);
                 cNum7Btn.setDisable(false);
@@ -1128,8 +1069,8 @@ public class MainController implements Initializable {
                 cNum2Btn.setDisable(false);
                 cNum1Btn.setDisable(false);
                 cNum0Btn.setDisable(false);
-                break;
-            case "OCT":
+            }
+            case "OCT" -> {
                 cNum7Btn.setDisable(false);
                 cNum6Btn.setDisable(false);
                 cNum5Btn.setDisable(false);
@@ -1138,75 +1079,105 @@ public class MainController implements Initializable {
                 cNum2Btn.setDisable(false);
                 cNum1Btn.setDisable(false);
                 cNum0Btn.setDisable(false);
-                break;
-            case "BIN":
+            }
+            case "BIN" -> {
                 cNum1Btn.setDisable(false);
                 cNum0Btn.setDisable(false);
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
 
     }
 
     public void convert(){
-        String text = result.getText();
+        String text = result.getText().replaceAll("\\s", "");
         String decNumber = switch (convertMode) {
             case "BIN" -> binToDec(text);
             case "HEX" -> hexToDec(text);
             case "OCT" -> octToDec(text);
             default -> text;
         };
-
-        //System.out.println(convertMode+"  "+decNumber);
+       // System.out.println(convertMode+"  "+decNumber);
         decNum.setText(decNumber);
-        binNum.setText(decToBin(Long.parseLong(decNumber)));
+        binNum.setText(binNumberFormat(decToBin(Long.parseLong(decNumber))));
         octNum.setText(decToOct(Long.parseLong(decNumber)));
         hexNum.setText(decToHex(Long.parseLong(decNumber)));
     }
 
+
     public void convert(String oldMode, String newMode){
-        String text = result.getText();
-        String decNumber = "";
+        String text = result.getText().replaceAll("\\s", "");
+        String decNumber;
         switch (oldMode) {
-            case "BIN":
+            case "BIN" -> {
                 decNumber = binToDec(text);
                 binBtn.getStyleClass().remove("active-btn");
-                break;
-            case "HEX":
+            }
+            case "HEX" -> {
                 decNumber = hexToDec(text);
                 hexBtn.getStyleClass().remove("active-btn");
-                break;
-            case "OCT":
+            }
+            case "OCT" -> {
                 decNumber = octToDec(text);
                 octBtn.getStyleClass().remove("active-btn");
-                break;
-            default:
+            }
+            default -> {
                 decNumber = text;
                 decBtn.getStyleClass().remove("active-btn");
-                break;
-        };
+            }
+        }
 
-        String newNumber = "";
-        switch (newMode){
-            case "BIN":
-                newNumber = decToBin(Long.parseLong(decNumber));
+
+        String newNumber;
+        switch (newMode) {
+            case "BIN" -> {
+                newNumber = binNumberFormat(decToBin(Long.parseLong(decNumber)));
                 binBtn.getStyleClass().add("active-btn");
-                break;
-            case "HEX":
+            }
+            case "HEX" -> {
                 newNumber = decToHex(Long.parseLong(decNumber));
                 hexBtn.getStyleClass().add("active-btn");
-                break;
-            case "OCT":
+            }
+            case "OCT" -> {
                 newNumber = decToOct(Long.parseLong(decNumber));
                 octBtn.getStyleClass().add("active-btn");
-                break;
-            default:
+            }
+            default -> {
                 newNumber = decNumber;
                 decBtn.getStyleClass().add("active-btn");
-                break;
-        };
+            }
+        }
+
+        System.out.println("hih: " + newNumber);
 
         result.setText(newNumber);
+    }
+
+    private String binNumberFormat(String num){
+        if(num.equals("0")) return "0";
+        int length = num.length();
+        int i = 4 - length % 4;
+        StringBuilder numBuilder = new StringBuilder(num);
+        for (; i > 0; i--) {
+            numBuilder.insert(0, "0");
+        }
+        num = numBuilder.toString();
+
+        char[] arr = num.toCharArray();
+        length = arr.length;
+        int count = 1;
+        StringBuilder result = new StringBuilder();
+        for(i = 0; i < length; i++){
+            if(count == 4){
+                result.append(arr[i]).append(" ");
+                count = 1;
+            }else {
+                count++;
+                result.append(arr[i]);
+            }
+        }
+
+        return result.toString().trim();
     }
 }
