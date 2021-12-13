@@ -215,7 +215,10 @@ public class MainController implements Initializable {
         toNormalTabBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, e-> {
             normalTab.toFront();
             reset();
-            convertMode = "";
+            decNum.setText("0");
+            hexNum.setText("0");
+            octNum.setText("0");
+            binNum.setText("0");
         });
 
         cNum0Btn.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
@@ -324,9 +327,20 @@ public class MainController implements Initializable {
 
     //Xử lý sự kiện nhấn nút =
     public void eqBtnHandler(){
-        while (openParentheses > 0){
-            closePHandler();
-        }
+       if(openParentheses > 0){
+            if(!exp.endsWith(")")){
+                exp += " "+ result.getText();
+                expression.setText(expression.getText() + " " + result.getText());
+            }
+           while (openParentheses > 0){
+               System.out.println(openParentheses);
+               //closePHandler();
+               exp += " )";
+               expression.setText(expression.getText() + " )");
+               System.out.println(exp);
+               openParentheses--;
+           }
+       }
         if(exp.equals("")){
             exp = result.getText();
             expression.setText(result.getText());
@@ -368,9 +382,10 @@ public class MainController implements Initializable {
 
     //xử lý sự kiện nhấn phím số trên màn hình
     private void numberBtnHandler(JFXButton btn){
-        if(invalidResult){  reset();}
+        if(invalidResult || isCalculated){  reset();}
         clearBtn.setText("CE");
-        if(result.getText().equals("0") || isLastOp || isCalculated){
+        if(result.getText().equals("0") || isLastOp){
+            System.out.println("hihi");
             result.setText("");
             isLastOp = false;
             isCalculated = false;
@@ -381,7 +396,7 @@ public class MainController implements Initializable {
     }
     //xử lý sự kiện nhấn phím số trên bàn phím
     public void numberBtnHandler(KeyEvent e){
-        if(invalidResult){  reset();}
+        if(invalidResult || isCalculated){  reset();}
         clearBtn.setText("CE");
         if(result.getText().equals("0") || isLastOp){
             result.setText("");
@@ -399,6 +414,7 @@ public class MainController implements Initializable {
             expression.setText("");
             exp = "";
             isLastOp = false;
+            isCalculated = false;
         }
         if(isLastOp){
             if(!lastOp.equals(op)){
@@ -455,7 +471,13 @@ public class MainController implements Initializable {
 
             lastOp = op;
             isLastOp = true;
-        }else {
+        }else if(specialExp){
+            specialExp = false;
+            isLastOp = true;
+            exp = exp + " " + op;
+            lastOp = op;
+            expression.setText(expression.getText() + " " + op);
+        } else {
             switch (op) {
                 case "sin", "cos", "tan", "cot", "sqrt", "ln" -> {
                     exp = "1 " + op + " (";
@@ -475,41 +497,11 @@ public class MainController implements Initializable {
         }
 
     }
-    //xử lý sự kiện nhấn phím toán hạng trên bàn phím
-    private void opBtnHandler(KeyEvent e){
-        if(! Pattern.compile(".*\\d.*").matcher(result.getText()).matches()) result.setText("0");
-            if(!isLastOp){
-                if(isCalculated) expression.setText("");
-
-                exp = exp + " " +curNumber + " " + e.getText();
-                expression.setText(expression.getText()+" "+result.getText()+" "+e.getText());
-                isLastOp = true;
-            }else {
-                if(specialExp){
-                    specialExp = false;
-                    expression.setText(expression.getText()+ " "+ e.getText());
-                    exp = exp + " " + e.getText();
-                }else if(!e.getText().equals(lastOp)){
-                    String ex = expression.getText();
-                    expression.setText(ex.substring(0, ex.lastIndexOf(" ")));
-                    expression.setText(expression.getText()+e.getText());
-
-                    exp = exp.substring(0, exp.length() - 1);
-                    exp = exp +e.getText();
-                }
-            }
-        lastOp = e.getText();
-    }
 
     public void keyPressHandler(KeyEvent e){
         Matcher operand = Pattern.compile("\\d+").matcher(e.getText());
         if(operand.matches()){
             numberBtnHandler(e);
-        }
-
-        Matcher operator = Pattern.compile("[/*\\-+]").matcher(e.getText());
-        if(operator.matches()){
-            opBtnHandler(e);
         }
     }
 
@@ -547,7 +539,7 @@ public class MainController implements Initializable {
     public void factBtnHandler(){
         if(invalidResult){  reset();}
         int num = Integer.parseInt(result.getText());
-        isLastOp = true;
+        //isLastOp = true;
 
         curNumber = fact(num);
         exp = exp + " " + curNumber;
@@ -795,9 +787,12 @@ public class MainController implements Initializable {
        /*
        *
        * */
-       /* System.out.println("/////////////////////////////");
+
+       System.out.println("/////////////////////////////");
+       System.out.println(exp);
+       System.out.println("---------------------------------");
         System.out.println(operandStack.toString());
-        System.out.println(operatorStack.toString());*/
+        System.out.println(operatorStack.toString());
        //Thực hiện vòng lặp cho đến khi stack toán tử có trống
         while (!operatorStack.isEmpty()){
 
